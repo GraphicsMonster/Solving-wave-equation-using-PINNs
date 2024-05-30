@@ -137,9 +137,27 @@ ax.set_zlabel('u')
 
 plt.show()
 
-# Plotting the error between the analytical solution and the model predictions
-error = torch.abs(u_analytic - u_pred)
-plt.imshow(error.numpy(), cmap='viridis')
-plt.colorbar()
-plt.title("Error between the Analytical Solution and the Model Predictions")
+
+# The model predictions are pretty close to the analytical solution.
+# Let us plot the evolution of the displacement with varying spatial coordinates as time evolves in the background with no axis labels. Kind of like an animation
+
+import matplotlib.animation as animation
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+
+line1, = ax.plot(x.numpy(), u_analytic[:, 0].numpy(), 'r', label='Analytical')
+line2, = ax.plot(x.numpy(), u_pred[:, 0].numpy(), 'b', label='Predictions')
+ax.set_xlabel('x')
+ax.set_ylabel('u')
+ax.set_ylim(-1, 1)  # Set the y-axis limits to -1 and 1
+ax.legend()
+
+def update(i):
+    line1.set_ydata(u_analytic[:, i].numpy())
+    line2.set_ydata(u_pred[:, i].numpy())
+    ax.set_title(f"Time: {t[i].item()}")
+    return line1, line2
+
+ani = animation.FuncAnimation(fig, update, frames=range(1000), interval=50)
 plt.show()
