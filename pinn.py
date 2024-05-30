@@ -4,7 +4,7 @@
 1. u(0, t) = 0
 2. u(1, t) = 0
 3. u(x, 0) = sin(pi*x)
-4. du(x, 0)/dx = 0
+4. du(x, 0)/dt = 0
 '''
 
 import torch
@@ -150,7 +150,7 @@ line1, = ax.plot(x.numpy(), u_analytic[:, 0].numpy(), 'r', label='Analytical')
 line2, = ax.plot(x.numpy(), u_pred[:, 0].numpy(), 'b', label='Predictions')
 ax.set_xlabel('x')
 ax.set_ylabel('u')
-ax.set_ylim(-1, 1)  # Set the y-axis limits to -1 and 1
+ax.set_ylim(-1, 1)
 ax.legend()
 
 def update(i):
